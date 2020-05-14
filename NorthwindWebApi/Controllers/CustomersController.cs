@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using NorthwindWebApi.Models;
 
 namespace NorthwindWebApi.Controllers
-{   
+{
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
@@ -30,7 +30,7 @@ namespace NorthwindWebApi.Controllers
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(string id)
+        public async Task<ActionResult<Customer>> GetCustomer([FromRoute] string id)
         {
             var customers = await _context.Customers.FindAsync(id);
 
@@ -46,7 +46,7 @@ namespace NorthwindWebApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(string id, Customer customer)
+        public async Task<IActionResult> PutCustomer([FromRoute]string id, [FromBody]Customer customer)
         {
             if (id != customer.CustomerId)
             {
@@ -78,7 +78,7 @@ namespace NorthwindWebApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<ActionResult<Customer>> PostCustomer([FromBody] Customer customer)
         {
             _context.Customers.Add(customer);
             try
@@ -102,7 +102,7 @@ namespace NorthwindWebApi.Controllers
 
         // DELETE: api/Customers/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Customer>> DeleteCustomer(string id)
+        public async Task<ActionResult<Customer>> DeleteCustomer([FromRoute]string id)
         {
             var customers = await _context.Customers.FindAsync(id);
             if (customers == null)
