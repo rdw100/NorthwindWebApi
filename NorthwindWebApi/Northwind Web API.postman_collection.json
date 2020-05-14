@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "4e02c7ec-61b8-4bbe-a9ad-20b3e7856ddd",
+		"name": "Northwind Web API",
+		"description": "## Northwind Web API\r\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get ALFKI",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Get retrieves a customer by ID.  The operation will successfully complete with a \"200 OK\".  This indicates a successful response."
+			},
+			"response": []
+		},
+		{
+			"name": "Put ALFKI",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Put updates an existing customer by ID.  The operation will successfully complete with a \"204 No Content\".  This indicates a successful response."
+			},
+			"response": []
+		},
+		{
+			"name": "Post Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Post creates a new customer.  The operation will successfully complete with a \"201 Created\".  This indicates a successful response."
+			},
+			"response": []
+		},
+		{
+			"name": "Post Customer Error",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Post creates a new customer.  The operation will fail and respond with a \"400 Bad Request\".  This indicates a failed response.  The body response will indicate the column length error."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete New Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Delete deletes one customer by ID.  Nothing is sent in the body.  The operation will successfully complete with a \"200 OK\".  This indicates a successful response."
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

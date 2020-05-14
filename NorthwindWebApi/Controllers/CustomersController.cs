@@ -25,6 +25,8 @@ namespace NorthwindWebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", _context.Customers.Count().ToString());
+
             return await _context.Customers.ToListAsync();
         }
 
@@ -32,14 +34,14 @@ namespace NorthwindWebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer([FromRoute] string id)
         {
-            var customers = await _context.Customers.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(id);
 
-            if (customers == null)
+            if (customer == null)
             {
                 return NotFound();
             }
 
-            return customers;
+            return customer;
         }
 
         // PUT: api/Customers/5
@@ -80,6 +82,11 @@ namespace NorthwindWebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer([FromBody] Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
             _context.Customers.Add(customer);
             try
             {
@@ -104,16 +111,16 @@ namespace NorthwindWebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Customer>> DeleteCustomer([FromRoute]string id)
         {
-            var customers = await _context.Customers.FindAsync(id);
-            if (customers == null)
+            var customer = await _context.Customers.FindAsync(id);
+            if (customer == null)
             {
                 return NotFound();
             }
 
-            _context.Customers.Remove(customers);
+            _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
 
-            return customers;
+            return customer;
         }
 
         private bool CustomersExists(string id)
