@@ -12,7 +12,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "https://localhost:44314/api/customers/ALFKI",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44314",
+					"path": [
+						"api",
+						"customers",
+						"ALFKI"
+					]
 				},
 				"description": "Get retrieves a customer by ID.  The operation will successfully complete with a \"200 OK\".  This indicates a successful response."
 			},
@@ -21,10 +31,31 @@
 		{
 			"name": "Put ALFKI",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": "Sending raw json content in Body.",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": \"ALFKI\",\r\n    \"companyName\": \"Alfreds Futterkiste\",\r\n    \"contactName\": \"Maria Anders\",\r\n    \"contactTitle\": \"Sales Representative\",\r\n    \"address\": \"Obere Str. 57\",\r\n    \"city\": \"Berlin\",\r\n    \"region\": null,\r\n    \"postalCode\": \"12209\",\r\n    \"country\": \"Germany\",\r\n    \"phone\": \"030-0074321\",\r\n    \"fax\": \"030-0076545\",\r\n    \"orders\": []\r\n}"
+				},
 				"url": {
-					"raw": ""
+					"raw": "https://localhost:44314/api/customers/ALFKI",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44314",
+					"path": [
+						"api",
+						"customers",
+						"ALFKI"
+					]
 				},
 				"description": "Put updates an existing customer by ID.  The operation will successfully complete with a \"204 No Content\".  This indicates a successful response."
 			},
@@ -33,10 +64,36 @@
 		{
 			"name": "Post Customer",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": "Sending raw json content in Body.",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": \"ZUCCA\",\r\n    \"companyName\": \"Pumpkin Squash\",\r\n    \"contactName\": \"Fiore\",\r\n    \"contactTitle\": \"CEO\",\r\n    \"address\": \"123 Winter Squash\",\r\n    \"city\": \"Milan\",\r\n    \"region\": null,\r\n    \"postalCode\": \"20121\",\r\n    \"country\": \"Italy\",\r\n    \"phone\": \"55 55-5555\",\r\n    \"fax\": \"55 55-555555555\",\r\n    \"orders\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": ""
+					"raw": "https://localhost:44314/api/customers/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44314",
+					"path": [
+						"api",
+						"customers",
+						""
+					]
 				},
 				"description": "Post creates a new customer.  The operation will successfully complete with a \"201 Created\".  This indicates a successful response."
 			},
@@ -45,10 +102,31 @@
 		{
 			"name": "Post Customer Error",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": "Sending raw json content in Body.",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": \"ZUCCA\",\r\n    \"companyName\": \"Pumpkin Squash 1892234567893123456789412345678951234567896\",\r\n    \"contactName\": \"Fiore\",\r\n    \"contactTitle\": \"CEO\",\r\n    \"address\": \"123 Winter Squash\",\r\n    \"city\": \"Milan\",\r\n    \"region\": null,\r\n    \"postalCode\": \"20121\",\r\n    \"country\": \"Italy\",\r\n    \"phone\": \"55 55-5555\",\r\n    \"fax\": \"55 55-555555555\",\r\n    \"orders\": []\r\n}"
+				},
 				"url": {
-					"raw": ""
+					"raw": "https://localhost:44314/api/customers/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44314",
+					"path": [
+						"api",
+						"customers",
+						""
+					]
 				},
 				"description": "Post creates a new customer.  The operation will fail and respond with a \"400 Bad Request\".  This indicates a failed response.  The body response will indicate the column length error."
 			},
@@ -58,9 +136,27 @@
 			"name": "Delete New Customer",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "content-typ",
+						"value": "application/json",
+						"description": "Sending raw json content in Body.",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"url": {
-					"raw": ""
+					"raw": "https://localhost:44314/api/customers/ZUCCA",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44314",
+					"path": [
+						"api",
+						"customers",
+						"ZUCCA"
+					]
 				},
 				"description": "Delete deletes one customer by ID.  Nothing is sent in the body.  The operation will successfully complete with a \"200 OK\".  This indicates a successful response."
 			},
