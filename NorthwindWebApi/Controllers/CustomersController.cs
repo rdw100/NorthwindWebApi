@@ -8,9 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using NorthwindWebApi.Models;
 
 namespace NorthwindWebApi.Controllers
-{
-    [Route("api/[controller]")]
+{   
     [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
     public class CustomersController : ControllerBase
     {
         private readonly NorthwindContext _context;
@@ -29,7 +30,7 @@ namespace NorthwindWebApi.Controllers
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomers(string id)
+        public async Task<ActionResult<Customer>> GetCustomer(string id)
         {
             var customers = await _context.Customers.FindAsync(id);
 
@@ -45,14 +46,14 @@ namespace NorthwindWebApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomers(string id, Customer customers)
+        public async Task<IActionResult> PutCustomer(string id, Customer customer)
         {
-            if (id != customers.CustomerId)
+            if (id != customer.CustomerId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(customers).State = EntityState.Modified;
+            _context.Entry(customer).State = EntityState.Modified;
 
             try
             {
@@ -77,16 +78,16 @@ namespace NorthwindWebApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomers(Customer customers)
+        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
-            _context.Customers.Add(customers);
+            _context.Customers.Add(customer);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (CustomersExists(customers.CustomerId))
+                if (CustomersExists(customer.CustomerId))
                 {
                     return Conflict();
                 }
@@ -96,12 +97,12 @@ namespace NorthwindWebApi.Controllers
                 }
             }
 
-            return CreatedAtAction("GetCustomers", new { id = customers.CustomerId }, customers);
+            return CreatedAtAction("GetCustomers", new { id = customer.CustomerId }, customer);
         }
 
         // DELETE: api/Customers/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Customer>> DeleteCustomers(string id)
+        public async Task<ActionResult<Customer>> DeleteCustomer(string id)
         {
             var customers = await _context.Customers.FindAsync(id);
             if (customers == null)
