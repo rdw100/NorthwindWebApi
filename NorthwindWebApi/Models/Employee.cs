@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace NorthwindWebApi.Models
 {
-    public partial class Employees
+    public partial class Employee
     {
-        public Employees()
+        public Employee()
         {
-            InverseReportsToNavigation = new HashSet<Employees>();
-            Orders = new HashSet<Orders>();
+            InverseReportsToNavigation = new HashSet<Employee>();
+            Orders = new HashSet<Order>();
         }
 
         public int EmployeeId { get; set; }
@@ -30,8 +30,8 @@ namespace NorthwindWebApi.Models
         public int? ReportsTo { get; set; }
         public string PhotoPath { get; set; }
 
-        public virtual Employees ReportsToNavigation { get; set; }
-        public virtual ICollection<Employees> InverseReportsToNavigation { get; set; }
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual Employee ReportsToNavigation { get; set; }
+        public virtual ICollection<Employee> InverseReportsToNavigation { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

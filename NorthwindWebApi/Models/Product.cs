@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace NorthwindWebApi.Models
 {
-    public partial class Products
+    public partial class Product
     {
-        public Products()
+        public Product()
         {
-            OrderDetails = new HashSet<OrderDetails>();
+            OrderDetails = new HashSet<OrderDetail>();
         }
 
         public int ProductId { get; set; }
@@ -21,8 +21,8 @@ namespace NorthwindWebApi.Models
         public short? ReorderLevel { get; set; }
         public bool Discontinued { get; set; }
 
-        public virtual Categories Category { get; set; }
-        public virtual Suppliers Supplier { get; set; }
-        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual Supplier Supplier { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
