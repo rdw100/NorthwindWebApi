@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NorthwindWebApi.Interfaces;
 using NorthwindWebApi.Models;
 
 namespace NorthwindWebApi.Controllers
@@ -14,34 +16,42 @@ namespace NorthwindWebApi.Controllers
     [Produces("application/json")]
     public class CustomersController : ControllerBase
     {
-        private readonly NorthwindContext _context;
+        private readonly ICustomerRepository _customerRepository;
 
-        public CustomersController(NorthwindContext context)
+        public CustomersController(ICustomerRepository customerRepository)
         {
-            _context = context;
+            _customerRepository = customerRepository;
         }
 
         // GET: api/Customers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-            Request.HttpContext.Response.Headers.Add("X-Total-Count", _context.Customers.Count().ToString());
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", _customerRepository.GetAll().Count().ToString());
+            // Longer-running operation as asynchronous
+            Task<List<Customer>> myTask = Task.Run(() => _customerRepository.GetAll().ToList());
+            List<Customer> result = await myTask;
 
-            return await _context.Customers.ToListAsync();
+            return result;
         }
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer([FromRoute] string id)
+        public async Task<IActionResult> GetCustomer([FromRoute] string id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var customer = await _customerRepository.Find(id);
 
             if (customer == null)
             {
                 return NotFound();
             }
 
-            return customer;
+            return Ok(customer);
         }
 
         // PUT: api/Customers/5
@@ -55,15 +65,13 @@ namespace NorthwindWebApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _customerRepository.Update(customer);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomersExists(id))
+                if (await CustomersExists(customer.CustomerId) == false)
                 {
                     return NotFound();
                 }
@@ -80,21 +88,20 @@ namespace NorthwindWebApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer([FromBody] Customer customer)
+        public async Task<IActionResult> PostCustomer([FromBody] Customer customer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             
-            _context.Customers.Add(customer);
             try
             {
-                await _context.SaveChangesAsync();
+                await _customerRepository.Add(customer);
             }
             catch (DbUpdateException)
             {
-                if (CustomersExists(customer.CustomerId))
+                if (await CustomersExists(customer.CustomerId))
                 {
                     return Conflict();
                 }
@@ -109,23 +116,22 @@ namespace NorthwindWebApi.Controllers
 
         // DELETE: api/Customers/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Customer>> DeleteCustomer([FromRoute]string id)
+        public async Task<IActionResult> DeleteCustomer([FromRoute]string id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _customerRepository.Find(id);
             if (customer == null)
             {
                 return NotFound();
             }
 
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
+            await _customerRepository.Remove(id);
 
-            return customer;
+            return Ok(customer);
         }
 
-        private bool CustomersExists(string id)
+        private async Task<bool> CustomersExists(string id)
         {
-            return _context.Customers.Any(e => e.CustomerId == id);
+            return await _customerRepository.Exist(id);
         }
     }
 }

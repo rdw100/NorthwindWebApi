@@ -7,6 +7,27 @@
 	},
 	"item": [
 		{
+			"name": "Get ALL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44314/api/customers/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44314",
+					"path": [
+						"api",
+						"customers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get ALFKI",
 			"request": {
 				"method": "GET",
@@ -135,7 +156,7 @@
 		{
 			"name": "Delete New Customer",
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [
 					{
 						"key": "content-typ",
