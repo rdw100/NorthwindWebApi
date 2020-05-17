@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using NorthwindWebApi;
 using NorthwindWebApi.Models;
@@ -12,11 +11,12 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Xunit;
 
-namespace Northwind.WebApi.MsTests
+namespace Northwind.WebApi.XUnitTests
 {
-    [TestClass]
     public class CustomerIntegrationTests
     {
         private readonly HttpClient _client;
@@ -32,14 +32,14 @@ namespace Northwind.WebApi.MsTests
         {
             projectPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, DIR));
             projectDir = Path.Combine(projectPath, APP);
-            
+
             _server = new TestServer(new WebHostBuilder()
                 .UseEnvironment("Development")
                 .UseContentRoot(projectDir)
                 .UseConfiguration(new ConfigurationBuilder()
                     .SetBasePath(projectDir)
                     .AddJsonFile(STORE)
-                    .Build()                
+                    .Build()
                 )
                 .UseStartup<Startup>());
 
@@ -50,8 +50,8 @@ namespace Northwind.WebApi.MsTests
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        [TestMethod]
-        public void CustomerHttpGet_AllCustomers_OK()
+        [Fact]
+        public void CustomerHttpGet_AllCustomers_200OK()
         {
             //Arrange
             HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("GET"), $"/api/customers/");
@@ -60,12 +60,12 @@ namespace Northwind.WebApi.MsTests
             HttpResponseMessage response = _client.SendAsync(request).Result;
 
             //Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [TestMethod]
-        [DataRow("ALFKI")]
-        public void CustomerHttpGet_CustomerById_OK(string id)
+        [Theory]
+        [InlineData("ALFKI")]
+        public void CustomerHttpGet_CustomerById_200OK(string id)
         {
             //Arrange
             HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("GET"), $"/api/customers/{id}");
@@ -74,11 +74,11 @@ namespace Northwind.WebApi.MsTests
             HttpResponseMessage response = _client.SendAsync(request).Result;
 
             //Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [TestMethod]
-        [DataRow("ALFKI")]
+        [Theory]
+        [InlineData("ALFKI")]
         public void CustomerHttpPut_CustomerById_204NoContent(string id)
         {
             //Arrange
@@ -93,10 +93,10 @@ namespace Northwind.WebApi.MsTests
             HttpResponseMessage responsePut = _client.SendAsync(request).Result;
 
             //Assert
-            Assert.AreEqual(HttpStatusCode.NoContent, responsePut.StatusCode);
+            Assert.Equal(HttpStatusCode.NoContent, responsePut.StatusCode);
         }
 
-        [TestMethod]
+        [Fact]
         public async void CustomerHttpPost_CreateCustomer_201NoContent()
         {
             //Arrange
@@ -123,10 +123,10 @@ namespace Northwind.WebApi.MsTests
             HttpResponseMessage response = await _client.PostAsync(URL, data);
 
             //Assert
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         }
 
-        [TestMethod]
+        [Fact]
         public async void CustomerHttpPost_CreateCustomerError_400BadRequest()
         {
             //Arrange
@@ -153,11 +153,11 @@ namespace Northwind.WebApi.MsTests
             HttpResponseMessage response = await _client.PostAsync(URL, data);
 
             //Assert
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        [TestMethod]
-        [DataRow("ZUCCA")]
+        [Theory]
+        [InlineData("ZUCCA")]
         public void CustomerHttpDelete_CustomerById_200OK(string id)
         {
             //Arrange
@@ -165,14 +165,14 @@ namespace Northwind.WebApi.MsTests
             HttpResponseMessage responseGet = _client.SendAsync(requestGet).Result;
 
             if (HttpStatusCode.OK == responseGet.StatusCode)
-            {
+            { 
                 HttpRequestMessage requestDelete = new HttpRequestMessage(new HttpMethod("DELETE"), $"/api/customers/{id}");
 
                 //Act
                 HttpResponseMessage responseDelete = _client.SendAsync(requestDelete).Result;
 
                 //Assert
-                Assert.AreEqual(HttpStatusCode.OK, responseDelete.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, responseDelete.StatusCode);
             };
         }
     }
