@@ -30,6 +30,13 @@ namespace NorthwindWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            // Response caching
+            services.AddResponseCaching();
+
+            // Memory caching
+            services.AddMemoryCache();
+
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -44,6 +51,9 @@ namespace NorthwindWebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Response caching
+            app.UseResponseCaching();
 
             app.UseHttpsRedirection();
 

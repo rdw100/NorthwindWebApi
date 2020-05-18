@@ -25,6 +25,7 @@ namespace NorthwindWebApi.Controllers
 
         // GET: api/Customers
         [HttpGet]
+        [ResponseCache(Duration = 60)]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
             Request.HttpContext.Response.Headers.Add("X-Total-Count", _customerRepository.GetAll().Count().ToString());
@@ -37,6 +38,7 @@ namespace NorthwindWebApi.Controllers
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 60)]
         public async Task<IActionResult> GetCustomer([FromRoute] string id)
         {
             if (!ModelState.IsValid)
