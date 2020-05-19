@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NorthwindWebApi.Models
+namespace Northwind.WebApi.Models
 {
     public partial class Category
     {

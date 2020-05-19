@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NorthwindWebApi\NorthwindWebApi.csproj" />
+    <ProjectReference Include="..\Northwind.WebApi\Northwind.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

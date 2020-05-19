@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NorthwindWebApi.Interfaces;
-using NorthwindWebApi.Models;
+using Northwind.WebApi.Interfaces;
+using Northwind.WebApi.Models;
 
-namespace NorthwindWebApi.Controllers
+namespace Northwind.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

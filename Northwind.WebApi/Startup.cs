@@ -11,11 +11,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NorthwindWebApi.Interfaces;
-using NorthwindWebApi.Models;
-using NorthwindWebApi.Repositories;
+using Northwind.WebApi.Interfaces;
+using Northwind.WebApi.Models;
+using Northwind.WebApi.Repositories;
 
-namespace NorthwindWebApi
+namespace Northwind.WebApi
 {
     public class Startup
     {

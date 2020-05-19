@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using NorthwindWebApi.Interfaces;
-using NorthwindWebApi.Models;
+using Northwind.WebApi.Interfaces;
+using Northwind.WebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NorthwindWebApi.Repositories
+namespace Northwind.WebApi.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {

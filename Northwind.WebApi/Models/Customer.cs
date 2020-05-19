@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindWebApi.Models
+namespace Northwind.WebApi.Models
 {
     public partial class Customer
     {

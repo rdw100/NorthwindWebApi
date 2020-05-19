@@ -1,10 +1,10 @@
-﻿using NorthwindWebApi.Models;
+﻿using Northwind.WebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NorthwindWebApi.Interfaces
+namespace Northwind.WebApi.Interfaces
 {
     public interface ICustomerRepository
     {
