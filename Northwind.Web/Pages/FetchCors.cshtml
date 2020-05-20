@@ -1,0 +1,21 @@
+﻿@page
+@model Northwind.Web.Pages.FetchCorsModel
+@{
+    ViewData["Title"] = "FetchCors";
+}
+
+<h1>FetchCors</h1>
+@section scripts {
+    <script>
+        fetch('https://localhost:44314/api/customers', { mode: 'cors' })
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (text) {
+                console.log('Request successful', text);
+            })
+            .catch(function (error) {
+                log('Request failed', error)
+            });
+    </script>
+}

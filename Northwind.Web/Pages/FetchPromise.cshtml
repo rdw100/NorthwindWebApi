@@ -1,0 +1,32 @@
+﻿@page
+@model Northwind.Web.Pages.FetchPromiseModel
+@{
+    ViewData["Title"] = "FetchPromise";
+}
+
+<h1>FetchPromise</h1>
+<p>A successful JSON response returns a wrapped "Request successful" message.  The server response assures the final data requested is returned succesfully.  This may narrow the cause of resulting error cases.</p>
+@section scripts {
+    <script>
+        function status(response) {
+            if (response.status >= 200 && response.status < 300) {
+                return Promise.resolve(response)
+            } else {
+                return Promise.reject(new Error(response.statusText))
+            }
+        }
+
+        function json(response) {
+            return response.json()
+        }
+
+        fetch('https://localhost:44314/api/customers')
+            .then(status)
+            .then(json)
+            .then(function (data) {
+                console.log('Request succeeded with JSON response', data);
+            }).catch(function (error) {
+                console.log('Request failed', error);
+            });      
+    </script>
+}

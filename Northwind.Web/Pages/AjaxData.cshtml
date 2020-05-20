@@ -1,0 +1,38 @@
+﻿@page
+@model Northwind.Web.Pages.AjaxDataModel
+@{
+}
+
+<div>
+    <select id="method">
+        <option value="get">GET</option>
+        <option value="post">POST</option>
+        <option value="put">PUT</option>
+    </select>
+    <input type="button" value="Try it" onclick="sendRequest()" />
+    <ul id='value1'>(Result)</ul>
+</div>
+
+@section scripts {
+    <script>
+    var serviceUrl = 'https://localhost:44314/api/customers';
+
+    function sendRequest() {
+        var method = $('#method').val();
+
+        $.ajax({
+            type: method,
+            url: serviceUrl
+        }).done(function (data) {
+            var list_html = "<ol>";
+            for (var i = 0; i < data.length; i++) {
+                list_html += "<li>" + data[i].companyName + " (" + data[i].customerId + ")" + "</li>";
+            }
+            list_html += "</ol>"
+            $("#value1").html(list_html);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            $('#value1').text(jqXHR.responseText || textStatus);
+        });
+    }
+    </script>
+}

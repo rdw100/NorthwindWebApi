@@ -1,0 +1,20 @@
+﻿@page
+@model Northwind.Web.Pages.FetchDataModel
+@{
+    ViewData["Title"] = "FetchData";
+}
+
+<h1>FetchData</h1>
+<p>Hit F12 for developer tools.  Is there a customer object?</p>
+
+<div class="text-left">
+    <p>The JSON data is written to an unordered list.</p>
+
+    <ul id="customers-list">
+    </ul>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/api.js"></script>
+}

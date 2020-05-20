@@ -1,0 +1,43 @@
+﻿@page
+@model Northwind.Web.Pages.FetchModel
+@{
+    ViewData["Title"] = "Fetch";
+}
+
+<h1>Fetch</h1>
+
+@section scripts {
+    <script>
+        fetch('https://localhost:44314/api/customers')
+            .then(
+                function (response) {
+                    if (response.status !== 200) {
+                        console.log('Looks like there was a problem. Status Code: ' +
+                            response.status);
+                        return;
+                    }
+
+                    // Examine the text in the response
+                    response.json().then(function (data) {
+                        console.log(data);
+                    });
+                }
+            )
+            .catch(function (err) {
+                console.log('Fetch Error :-S', err);
+            });
+
+        fetch('https://localhost:44314/api/customers', { mode: 'cors' })
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (text) {
+                console.log('Request successful', text);
+            })
+            .catch(function (error) {
+                log('Request failed', error)
+            });
+    </script>
+}
+
+Hit F12 for developer tools.  Is there a customer object?

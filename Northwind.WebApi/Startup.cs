@@ -19,6 +19,8 @@ namespace Northwind.WebApi
 {
     public class Startup
     {
+        readonly string LocalPolicy = "_localPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +31,22 @@ namespace Northwind.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: LocalPolicy,
+                    builder =>
+                    {
+                        //builder.WithOrigins()//("https://localhost:44398", "https://localhost:44398/api", "http://localhost:12904", "http://localhost:12904/api")
+                        //    .AllowAnyOrigin()
+                        //    .AllowAnyHeader()
+                        //    .AllowAnyMethod();
+
+                        builder.WithOrigins("https://localhost:44398")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+
             services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             // Response caching
@@ -40,6 +58,7 @@ namespace Northwind.WebApi
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
             services.AddDbContext<NorthwindContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CustomerContext")));
         }
@@ -59,11 +78,14 @@ namespace Northwind.WebApi
 
             app.UseRouting();
 
+            app.UseCors(LocalPolicy);
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers()
+                         .RequireCors(LocalPolicy);
             });
         }
     }

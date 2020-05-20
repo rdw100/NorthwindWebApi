@@ -1,0 +1,28 @@
+﻿@page
+@model Northwind.Web.Pages.XMLHttpRequestModel
+@{
+    ViewData["Title"] = "XMLHttpRequest";
+}
+
+<h1>XMLHttpRequest</h1>
+<p>Fetch API claims a simpler, cleaner API that uses promises.  Fetch over XMLHttpRequest advocates claim callback hell avoidance and faults complex XMLHttpRequest API memorization.</p>
+@section scripts {
+    <script>
+        function reqListener() {
+          var data = JSON.parse(this.responseText);
+          console.log(data);
+        }
+
+        function reqError(err) {
+          console.log('Fetch Error :-S', err);
+        }
+
+        var oReq = new XMLHttpRequest();
+        oReq.onload = reqListener;
+        oReq.onerror = reqError;
+        oReq.open('get', 'https://localhost:44314/api/customers', true);
+        oReq.send();
+    </script>
+}
+
+Hit F12 for developer tools.  Is there a customer object?
