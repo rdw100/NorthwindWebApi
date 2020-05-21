@@ -64,6 +64,20 @@ namespace Northwind.WebApi.XUnitTests
         }
 
         [Theory]
+        [InlineData(3, 5)]
+        public void CustomerHttpGet_CustomerByPage_OK(int size, int page)
+        {
+            //Arrange
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("GET"), $"/api/customers/seek?Size={size}&Page={page}");
+
+            //Act
+            HttpResponseMessage response = _client.SendAsync(request).Result;
+
+            //Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Theory]
         [InlineData("ALFKI")]
         public void CustomerHttpGet_CustomerById_200OK(string id)
         {
@@ -75,6 +89,20 @@ namespace Northwind.WebApi.XUnitTests
 
             //Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Theory]
+        [InlineData("ZZZZZ")]
+        public void CustomerHttpGet_CustomerById_404NotFound(string id)
+        {
+            //Arrange
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("GET"), $"/api/customers/{id}");
+
+            //Act
+            HttpResponseMessage response = _client.SendAsync(request).Result;
+
+            //Assert
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         [Theory]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Northwind.WebApi.Interfaces;
 using Northwind.WebApi.Models;
+using Northwind.WebApi.Shared;
 
 namespace Northwind.WebApi.Controllers
 {
@@ -26,7 +28,7 @@ namespace Northwind.WebApi.Controllers
         }
 
         // GET: api/Customers
-        [HttpGet]
+        [HttpGet]        
         [ResponseCache(Duration = 60)]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
@@ -35,7 +37,15 @@ namespace Northwind.WebApi.Controllers
             Task<List<Customer>> myTask = Task.Run(() => _customerRepository.GetAll().ToList());
             List<Customer> result = await myTask;
 
-            return result;
+            return Ok(result);
+        }
+
+        // GET: api/Customers/seek?Size=3&Page=4
+        [HttpGet("seek")]
+        public async Task<IActionResult> GetCustomersByPage([FromQuery] PaginationParameters pageParameters)
+        {
+            var customers = await _customerRepository.GetCustomersPage(pageParameters);
+            return Ok(customers);
         }
 
         // GET: api/Customers/5
@@ -75,6 +85,7 @@ namespace Northwind.WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
+                // Return 404 when ID does not exist.
                 if (await CustomersExists(customer.CustomerId) == false)
                 {
                     return NotFound();

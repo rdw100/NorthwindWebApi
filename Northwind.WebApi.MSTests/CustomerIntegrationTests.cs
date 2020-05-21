@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -76,6 +77,34 @@ namespace Northwind.WebApi.MsTests
 
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [TestMethod]
+        [DataRow(3,5)]
+        public void CustomerHttpGet_CustomerByPage_OK(int size, int page)
+        {
+            //Arrange
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("GET"), $"/api/customers/seek?Size={size}&Page={page}");
+
+            //Act
+            HttpResponseMessage response = _client.SendAsync(request).Result;
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [TestMethod]
+        [DataRow("ZZZZZ")]
+        public void CustomerHttpGet_CustomerById_404NotFound(string id)
+        {
+            //Arrange
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("GET"), $"/api/customers/{id}");
+
+            //Act
+            HttpResponseMessage response = _client.SendAsync(request).Result;
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         [TestMethod]

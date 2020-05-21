@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Northwind.WebApi.Interfaces;
 using Northwind.WebApi.Models;
+using Northwind.WebApi.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,10 +44,13 @@ namespace Northwind.WebApi.Repositories
             else
             {
                 var customer = await _context.Customers
-                    .Include(customer => customer.Orders).SingleOrDefaultAsync(a => a.CustomerId == id);
-                var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromSeconds(60));
-                _cache.Set(customer.CustomerId, customer, cacheEntryOptions);
+                    .Include(customer => customer.Orders)
+                    .SingleOrDefaultAsync(a => a.CustomerId == id);
+                if (customer != null) { 
+                    var cacheEntryOptions = new MemoryCacheEntryOptions()
+                        .SetSlidingExpiration(TimeSpan.FromSeconds(60));
+                    _cache.Set(customer.CustomerId, customer, cacheEntryOptions);
+                }
                 return customer;
             }
         }
@@ -53,6 +58,14 @@ namespace Northwind.WebApi.Repositories
         public IEnumerable<Customer> GetAll()
         {
             return _context.Customers;
+        }
+
+        public async Task<List<Customer>> GetCustomersPage([FromQuery] PaginationParameters pageParameters)
+        {
+            IQueryable<Customer> customers =  _context.Customers
+                .Skip(pageParameters.Size * (pageParameters.Page - 1))
+                .Take(pageParameters.Size);
+            return await customers.ToListAsync();
         }
 
         public async Task<Customer> Remove(string id)

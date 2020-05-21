@@ -1,4 +1,5 @@
 ﻿using Northwind.WebApi.Models;
+using Northwind.WebApi.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Northwind.WebApi.Interfaces
         Task<Customer> Add(Customer customer);
 
         IEnumerable<Customer> GetAll();
+
+        Task<List<Customer>> GetCustomersPage(PaginationParameters queryParameters);
 
         Task<Customer> Find(string id);
 
