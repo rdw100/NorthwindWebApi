@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Northwind.WebApi.Shared
 {
-    public class CustomerParameters : PaginationParameters
+    public class CustomerParameters : QueryStringParameters
     {
         public string Id { get; set; }
         public string CompanyName { get; set; }

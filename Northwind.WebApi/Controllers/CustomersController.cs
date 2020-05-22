@@ -40,7 +40,7 @@ namespace Northwind.WebApi.Controllers
             return Ok(result);
         }
 
-        // GET: api/Customers/seek?Size=3&Page=4
+        // GET: api/Customers/seek?country=UK&page=1&size=7&sortBy=CustomerId&sortOrder=desc
         [HttpGet("seek")]
         public async Task<IActionResult> GetCustomersByPage([FromQuery] CustomerParameters parameters)
         {

@@ -146,6 +146,18 @@
 			"response": []
 		},
 		{
+			"name": "Get Sort CustomerID Desc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Get customers by customerid sorted descending (Z-A) results.  The operation will successfully complete with a \"200 OK\".  This indicates a successful response."
+			},
+			"response": []
+		},
+		{
 			"name": "Put ALFKI",
 			"request": {
 				"method": "PUT",

@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Northwind.WebApi.Interfaces;
 using Northwind.WebApi.Models;
+using Northwind.WebApi.Models.Extensions;
 using Northwind.WebApi.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Northwind.WebApi.Repositories
@@ -76,11 +78,19 @@ namespace Northwind.WebApi.Repositories
                     c => c.CompanyName.ToLower().Contains(parameters.CompanyName.ToLower()));
             }
 
+            if (!string.IsNullOrEmpty(parameters.SortBy))
+            {
+                if (typeof(Customer).GetProperty(parameters.SortBy) != null)
+                {
+                    customers = customers.OrderByCustom(parameters.SortBy, parameters.SortOrder);
+                }
+            }
+
             // Page should not exceed count divided by page;
             // otherwise, set page to max possible pages
             if ((parameters.Page > 0) && (parameters.Size > 0))
             {
-                if (customers.Count() % parameters.Size <= parameters.Page)
+                if (customers.Count() % parameters.Size < parameters.Page)
                 {
                     parameters.Page = (customers.Count() % parameters.Size) + 1;
                 }
