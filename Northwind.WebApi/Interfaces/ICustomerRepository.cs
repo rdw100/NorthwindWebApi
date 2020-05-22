@@ -13,7 +13,7 @@ namespace Northwind.WebApi.Interfaces
 
         IEnumerable<Customer> GetAll();
 
-        Task<List<Customer>> GetCustomersPage(CustomerParameters parameters);
+        Task<List<Customer>> GetAllCustomers(CustomerParameters parameters);
 
         Task<Customer> Find(string id);
 

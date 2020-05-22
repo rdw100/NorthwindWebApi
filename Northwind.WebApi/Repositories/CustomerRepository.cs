@@ -62,7 +62,7 @@ namespace Northwind.WebApi.Repositories
             return _context.Customers;
         }
 
-        public async Task<List<Customer>> GetCustomersPage([FromQuery] CustomerParameters parameters)
+        public async Task<List<Customer>> GetAllCustomers([FromQuery] CustomerParameters parameters)
         {
             IQueryable<Customer> customers = _context.Customers;
 
@@ -113,6 +113,7 @@ namespace Northwind.WebApi.Repositories
 
         public async Task<Customer> Update(Customer customer)
         {
+            _context.Entry(customer).State = EntityState.Modified;
             _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
             return customer;

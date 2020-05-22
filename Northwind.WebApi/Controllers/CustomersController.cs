@@ -42,9 +42,9 @@ namespace Northwind.WebApi.Controllers
 
         // GET: api/Customers/seek?country=UK&page=1&size=7&sortBy=CustomerId&sortOrder=desc
         [HttpGet("seek")]
-        public async Task<IActionResult> GetCustomersByPage([FromQuery] CustomerParameters parameters)
+        public async Task<IActionResult> GetAllCustomers([FromQuery] CustomerParameters parameters)
         {
-            var customers = await _customerRepository.GetCustomersPage(parameters);
+            var customers = await _customerRepository.GetAllCustomers(parameters);
             return Ok(customers);
         }
 

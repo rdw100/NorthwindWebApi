@@ -78,7 +78,7 @@
 			"response": []
 		},
 		{
-			"name": "Get All Page",
+			"name": "Get All by Page",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -146,12 +146,44 @@
 			"response": []
 		},
 		{
-			"name": "Get Sort CustomerID Desc",
+			"name": "Get CustomerID Sort Desc",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "https://localhost:44314/api/customers/seek?country=UK&page=1&size=7&sortBy=CustomerId&sortOrder=desc",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44314",
+					"path": [
+						"api",
+						"customers",
+						"seek"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "UK"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "7"
+						},
+						{
+							"key": "sortBy",
+							"value": "CustomerId"
+						},
+						{
+							"key": "sortOrder",
+							"value": "desc"
+						}
+					]
 				},
 				"description": "Get customers by customerid sorted descending (Z-A) results.  The operation will successfully complete with a \"200 OK\".  This indicates a successful response."
 			},
