@@ -50,6 +50,102 @@
 			"response": []
 		},
 		{
+			"name": "Get Country",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44314/api/customers/seek?country=UK",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44314",
+					"path": [
+						"api",
+						"customers",
+						"seek"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "UK"
+						}
+					]
+				},
+				"description": "Get all paged customers by country.  The operation will successfully complete with a \"200 OK\".  This indicates a successful response."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44314/api/customers/seek?page=4&size=4",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44314",
+					"path": [
+						"api",
+						"customers",
+						"seek"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "4"
+						},
+						{
+							"key": "size",
+							"value": "4"
+						}
+					]
+				},
+				"description": "Get all paged customers.  The operation will successfully complete with a \"200 OK\".  This indicates a successful response."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Country by Page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44314/api/customers/seek?country=UK&page=2&size=3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44314",
+					"path": [
+						"api",
+						"customers",
+						"seek"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "UK"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				},
+				"description": "Get paged customers by country results.  The operation will successfully complete with a \"200 OK\".  This indicates a successful response."
+			},
+			"response": []
+		},
+		{
 			"name": "Put ALFKI",
 			"request": {
 				"method": "PUT",

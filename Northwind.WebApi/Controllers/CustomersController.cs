@@ -42,9 +42,9 @@ namespace Northwind.WebApi.Controllers
 
         // GET: api/Customers/seek?Size=3&Page=4
         [HttpGet("seek")]
-        public async Task<IActionResult> GetCustomersByPage([FromQuery] PaginationParameters pageParameters)
+        public async Task<IActionResult> GetCustomersByPage([FromQuery] CustomerParameters parameters)
         {
-            var customers = await _customerRepository.GetCustomersPage(pageParameters);
+            var customers = await _customerRepository.GetCustomersPage(parameters);
             return Ok(customers);
         }
 

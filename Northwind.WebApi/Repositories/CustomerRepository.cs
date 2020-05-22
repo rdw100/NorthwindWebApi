@@ -60,11 +60,36 @@ namespace Northwind.WebApi.Repositories
             return _context.Customers;
         }
 
-        public async Task<List<Customer>> GetCustomersPage([FromQuery] PaginationParameters pageParameters)
+        public async Task<List<Customer>> GetCustomersPage([FromQuery] CustomerParameters parameters)
         {
-            IQueryable<Customer> customers =  _context.Customers
-                .Skip(pageParameters.Size * (pageParameters.Page - 1))
-                .Take(pageParameters.Size);
+            IQueryable<Customer> customers = _context.Customers;
+
+            if (!string.IsNullOrEmpty(parameters.Country))
+            {
+                customers = customers.Where(
+                    c => c.Country == parameters.Country);
+            }
+
+            if (!string.IsNullOrEmpty(parameters.CompanyName))
+            {
+                customers = customers.Where(
+                    c => c.CompanyName.ToLower().Contains(parameters.CompanyName.ToLower()));
+            }
+
+            // Page should not exceed count divided by page;
+            // otherwise, set page to max possible pages
+            if ((parameters.Page > 0) && (parameters.Size > 0))
+            {
+                if (customers.Count() % parameters.Size <= parameters.Page)
+                {
+                    parameters.Page = (customers.Count() % parameters.Size) + 1;
+                }
+
+                customers = customers
+                .Skip(parameters.Size * (parameters.Page - 1))
+                .Take(parameters.Size);
+            }
+
             return await customers.ToListAsync();
         }
 
