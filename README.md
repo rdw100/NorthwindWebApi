@@ -13,4 +13,10 @@ This ASP.NET Core Web API demonstration project was created using Visual Studio 
 - MSTest, xUnit, and Postman tests
 - Javascript Fetch, jQuery/AJAX
 
+## Demonstration
+
+First, Newman executes the Northwind test collection from the command line.  This required a running Northwind.WebApi project (Ctrl + F5).
+
+Next, Dotnet CLI executes all solution tests.  This does not require a running project thanks to ASP.NET Core Test Host.
+
 ![Web API Tests GIF](https://github.com/rdw100/NorthwindWebApi/blob/master/Northwind.Web/wwwroot/img/L4IbEyAboy.gif)
