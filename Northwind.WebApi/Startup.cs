@@ -36,18 +36,14 @@ namespace Northwind.WebApi
                 options.AddPolicy(name: LocalPolicy,
                     builder =>
                     {
-                        //builder.WithOrigins()//("https://localhost:44398", "https://localhost:44398/api", "http://localhost:12904", "http://localhost:12904/api")
-                        //    .AllowAnyOrigin()
-                        //    .AllowAnyHeader()
-                        //    .AllowAnyMethod();
-
-                        builder.WithOrigins("https://localhost:44398")
+                        builder.WithOrigins("https://localhost:44398", "https://localhost:44398/api", "http://localhost:12904", "http://localhost:12904/api")
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
             });
 
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IShipperRepository, ShipperRepository>();
 
             // Response caching
             services.AddResponseCaching();
@@ -60,7 +56,7 @@ namespace Northwind.WebApi
             );
 
             services.AddDbContext<NorthwindContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("CustomerContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("NorthwindContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
