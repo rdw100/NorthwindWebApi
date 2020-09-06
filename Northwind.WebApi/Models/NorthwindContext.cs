@@ -239,10 +239,10 @@ namespace Northwind.WebApi.Models
                     .HasForeignKey(d => d.EmployeeId)
                     .HasConstraintName("FK_Orders_Employees");
 
-                entity.HasOne(d => d.ShipViaNavigation)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.ShipVia)
-                    .HasConstraintName("FK_Orders_Shippers");
+                entity.HasOne(d => d.ShipViaNavigation);
+                    //.WithMany(p => p.Orders)
+                    //.HasForeignKey(d => d.ShipVia)
+                    //.HasConstraintName("FK_Orders_Shippers");
             });
 
             modelBuilder.Entity<Product>(entity =>

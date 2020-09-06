@@ -28,7 +28,8 @@ namespace Northwind.WebApi.Controllers
         [ResponseCache(Duration = 60)]
         public async Task<ActionResult<IEnumerable<Shipper>>> GetShippers()
         {
-            Request.HttpContext.Response.Headers.Add("X-Total-Count", _shipperRepository.GetAll().Count().ToString());
+            //Request.HttpContext.Response.Headers.Add("X-Total-Count", _shipperRepository.GetAll().Count().ToString());
+
             // Longer-running operation as asynchronous
             Task<List<Shipper>> myTask = Task.Run(() => _shipperRepository.GetAll().ToList());
             List<Shipper> result = await myTask;
@@ -91,6 +92,7 @@ namespace Northwind.WebApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        //public async Task<IActionResult> PostShipper([FromBody] Shipper shipper)
         public async Task<ActionResult<Shipper>> PostShipper([FromBody] Shipper shipper)
         {
             if (!ModelState.IsValid)

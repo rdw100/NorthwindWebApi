@@ -30,13 +30,13 @@ namespace Northwind.WebApi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {                      
             services.AddCors(options =>
             {
                 options.AddPolicy(name: LocalPolicy,
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:44398", "https://localhost:44398/api", "http://localhost:12904", "http://localhost:12904/api")
+                        builder.WithOrigins("https://localhost:44398", "https://localhost:44398/api", "http://localhost:12904", "http://localhost:12904/api", "http://localhost:4200", "https://localhost:4200")
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
