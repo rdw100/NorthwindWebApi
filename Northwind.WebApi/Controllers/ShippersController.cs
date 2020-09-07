@@ -25,7 +25,6 @@ namespace Northwind.WebApi.Controllers
 
         // GET: api/Shippers
         [HttpGet]
-        [ResponseCache(Duration = 60)]
         public async Task<ActionResult<IEnumerable<Shipper>>> GetShippers()
         {
             //Request.HttpContext.Response.Headers.Add("X-Total-Count", _shipperRepository.GetAll().Count().ToString());
