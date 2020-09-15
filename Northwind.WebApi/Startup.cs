@@ -36,7 +36,12 @@ namespace Northwind.WebApi
                 options.AddPolicy(name: LocalPolicy,
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:44398", "https://localhost:44398/api", "http://localhost:12904", "http://localhost:12904/api", "http://localhost:4200", "https://localhost:4200")
+                        builder.WithOrigins("https://localhost:44398", 
+                            "https://localhost:44398/api",
+                            "http://localhost:12904",
+                            "http://localhost:3000", //REACT 
+                            "http://localhost:4200" //ANGULAR
+                            )
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
