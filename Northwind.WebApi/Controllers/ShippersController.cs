@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Northwind.WebApi.Interfaces;
 using Northwind.WebApi.Models;
-using Northwind.WebApi.Shared;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

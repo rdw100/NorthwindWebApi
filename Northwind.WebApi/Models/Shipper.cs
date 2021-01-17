@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Northwind.WebApi.Models
+﻿namespace Northwind.WebApi.Models
 {
     public partial class Shipper
     {
