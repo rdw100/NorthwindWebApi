@@ -1,4 +1,4 @@
-# NorthWindLinq
+# NorthwindWebApi
 This ASP.NET Core Web API demonstration project was created using Visual Studio 2019 16.6.0, .NET Core 3.1.3, & EF Core 3.1.3.  The objective is to demonstrate ASP.NET Core, ASP.NET Core WEB API, ASP.NET Core Test Host, Asynchronous Programming, Caching, and LINQ-to-Entity queries using the Northwind database.
 
 - .NET Core
